@@ -1,0 +1,4 @@
+[
+  { "label": "muted", "js": "localStorage.setItem('claudeGames.muted', '1'); location.reload(); 'reload'", "wait": 5000 },
+  { "label": "title", "js": "game.hold(true); game.step(0.6); game.info().state", "wait": 800, "shot": "screenshot" }
+]

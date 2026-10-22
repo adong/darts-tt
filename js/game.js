@@ -96,7 +96,7 @@
       const pp = G.cast[id];
       pp.holder.visible = true;
       pp.walk = null;
-      pp.holder.position.set(i === 0 ? -1.05 : -0.4, 0, SC.D() + (i === 0 ? 0.3 : 0.6));
+      pp.holder.position.set(i === 0 ? -1.5 : -2.75, 0, SC.D() + (i === 0 ? 0.8 : -0.35));
       pp.mode = 'none';
       SC.facePoint(pp, 2.4, SC.D() + 4.2);
     });

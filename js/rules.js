@@ -105,7 +105,7 @@
     return { x: x * amp, y: y * amp };
   }
   // how far the aim wobbles, as a fraction of R, per level; the brother steadying your arm takes most of it away
-  const SWAY = { easy: 0.13, normal: 0.2, steady: 0.25 };
+  const SWAY = { easy: 0.13, normal: 0.17, steady: 0.25 };
   const swaySpeed = (level) => (level === 'normal' ? 1.4 : 1);
 
   // ---------------------------------------------------------------- the CPU friends
