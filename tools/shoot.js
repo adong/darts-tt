@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /* Screenshots and page tests with headless Chrome over the DevTools protocol (node 22's built-in WebSocket, no npm).
-   From TT Gomoku.  node tools/shoot.js [steps.json] [outdir] [width height mobile]
-   Defaults: tools/shots.json, docs/, 1280 x 800. Serve ~/claude-games first (the preview server on port 8796), or set
-   URL=... (a file:// URL works too). Each step may have js (run in the page, using the window.game hooks), wait (ms)
-   and shot (file name). docs/screenshot.jpg: node tools/shoot.js tools/shots.json docs 1200 750 */
+   From TT Gomoku, via TT Bowling.  node tools/shoot.js [steps.json] [outdir] [width height mobile]
+   Defaults: tools/shots.json, docs/, 1280 x 800, and this game's index.html from file:// (set URL=... for a served
+   page or dist/darts-tt.html). Each step may have js (run in the page, using the window.game hooks), wait (ms) and
+   shot (file name). docs/screenshot.jpg: node tools/shoot.js tools/shots.json docs 1200 750 */
 'use strict';
 const { spawn } = require('child_process');
 const fs = require('fs');
@@ -14,7 +14,7 @@ const [stepsFile = path.join(__dirname, 'shots.json'), outDir = path.join(dir, '
 const steps = JSON.parse(fs.readFileSync(stepsFile, 'utf8'));
 fs.mkdirSync(outDir, { recursive: true });
 const port = 9400 + Math.floor(Math.random() * 400);
-const prof = fs.mkdtempSync(path.join(require('os').tmpdir(), 'bowlingtt-chrome-'));
+const prof = fs.mkdtempSync(path.join(require('os').tmpdir(), 'dartstt-chrome-'));
 const chrome = spawn('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', [
   '--headless=new', `--remote-debugging-port=${port}`, `--user-data-dir=${prof}`, `--window-size=${W},${H}`,
   '--no-first-run', '--no-default-browser-check', '--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--hide-scrollbars',
@@ -45,7 +45,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     await send('Page.enable');
     await send('Emulation.setDeviceMetricsOverride', { width: +W, height: +H, deviceScaleFactor: 1, mobile: mobile === '1' });
     if (mobile === '1') await send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });
-    await send('Page.navigate', { url: process.env.URL || 'http://localhost:8796/bowling-tt/' });
+    await send('Page.navigate', { url: process.env.URL || 'file://' + path.join(dir, 'index.html') });
     await sleep(4000);
     for (const s of steps) {
       if (s.size) await send('Emulation.setDeviceMetricsOverride', { width: s.size[0], height: s.size[1], deviceScaleFactor: 1, mobile: false });
