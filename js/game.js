@@ -96,7 +96,7 @@
       const pp = G.cast[id];
       pp.holder.visible = true;
       pp.walk = null;
-      pp.holder.position.set(i === 0 ? -0.75 : -0.05, 0, SC.D() + (i === 0 ? 0.25 : 0.55));
+      pp.holder.position.set(i === 0 ? -1.05 : -0.4, 0, SC.D() + (i === 0 ? 0.3 : 0.6));
       pp.mode = 'none';
       SC.facePoint(pp, 2.4, SC.D() + 4.2);
     });
@@ -173,7 +173,7 @@
   const bestKey = (mode, id, level) => `best.${G.style}.${mode}.${id}.${level}`;
   function bestLine(mode) {
     const ids = G.n === 2 ? [0, 1] : [0];
-    return ids.map((i) => { const s = G.slots[i], b = store.get(bestKey(mode, s.id, s.level), 0); return b ? `${Kit.roster.get(s.id).name}'S BEST ${b} DARTS` : ''; }).filter(Boolean).join(' · ');
+    return ids.map((i) => { const s = G.slots[i], b = store.get(bestKey(mode, s.id, s.level), 0); return b ? `${Kit.roster.get(s.id).name}'S BEST ${darts(b)}` : ''; }).filter(Boolean).join(' · ');
   }
   function showModes() { G.state = 'modes'; buildModeCards(); show('modes'); }
 
@@ -216,6 +216,7 @@
     Snd.music('play');
     startTurn(0);
   }
+  const darts = (n) => `${n} DART${n === 1 ? '' : 'S'}`;
   const brothersPlaying = () => G.players.some((p) => p.id === 'teddy' && !p.cpu) && G.players.some((p) => p.id === 'tommy' && !p.cpu);
   const cur = () => G.players[G.turn];
   const rulesFor = (p) => R.X01[p.level];
@@ -496,7 +497,7 @@
     SC.setCamera('front', { focus: { x: 0, z: o.z }, dur: 0.8 });
     sfx('cheer');
     Snd.music('over');
-    banner(G.players.length > 1 ? `${p.entry.name} WINS!` : 'YOU DID IT!', `${p.darts} DARTS`);
+    banner(G.players.length > 1 ? `${p.entry.name} WINS!` : 'YOU DID IT!', darts(p.darts));
     G.celebT = 0;
   }
   // the winner's signature move: Teddy's boxing or jump shot (taking turns), Tommy's Y, Foxy's wave, Froggy's hop
@@ -536,7 +537,8 @@
     $('cardTable').innerHTML = `<thead><tr><th>PLAYER</th><th>${G.mode === 'x01' ? 'LEFT' : 'REACHED'}</th><th>DARTS</th></tr></thead><tbody>${rows}</tbody>`;
     $('newBest').classList.toggle('on', !!G.newBest);
     const human = G.players.filter((q) => !q.cpu);
-    $('cardBest').textContent = human.map((q) => { const b = store.get(bestKey(G.mode, q.id, q.level), 0); return b ? `${q.entry.name}'S BEST ${b} DARTS` : ''; }).filter(Boolean).join(' · ');
+    $('cardBest').textContent = human.map((q) => { const b = store.get(bestKey(G.mode, q.id, q.level), 0); return b ? `${q.entry.name}'S BEST ${darts(b)}` : ''; }).filter(Boolean).join(' · ');
+    $('hud').classList.add('hidden');
     $('cardWins').textContent = G.players.length > 1 ? 'WINS: ' + G.players.map((q) => `${q.entry.name} ${G.wins[q.id] || 0}`).join(' · ') : '';
     show('card');
   }
@@ -587,7 +589,7 @@
     d.className = 'toast' + (kind ? ' ' + kind : '');
     d.textContent = text;
     $('toasts').appendChild(d);
-    while ($('toasts').children.length > 3) $('toasts').firstChild.remove();
+    while ($('toasts').children.length > 2) $('toasts').firstChild.remove();
     setTimeout(() => d.remove(), kind === 'hint' ? 3300 : 2500);
   }
   function pop(pos, text, kind) {

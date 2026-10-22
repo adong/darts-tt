@@ -122,7 +122,7 @@
   .buddybtn.five img { display: none; }
   .buddybtn.five .five { display: block; }
   @keyframes glow { 50% { box-shadow: 0 0 26px 6px rgba(255, 212, 0, 0.85), 0 5px 0 var(--ink); } }
-  #toasts { position: fixed; left: 50%; top: 16%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 4px; pointer-events: none; z-index: 9; width: 96vw; }
+  #toasts { position: fixed; left: 50%; top: 16%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; pointer-events: none; z-index: 9; width: 96vw; }
   .toast {
     font-family: var(--display); font-size: clamp(18px, 3.6vw, 32px); color: var(--yellow); max-width: 94vw; text-align: center;
     -webkit-text-stroke: 2px var(--ink); paint-order: stroke fill; text-shadow: 0 4px 0 var(--ink);
@@ -265,6 +265,9 @@
     .slot .nm { font-size: 16px; }
     .slot .seg button { font-size: 12px; padding: 6px 7px; }
     .credit { display: none; }
+    .tag { font-size: 13px; }
+    .logo span { font-size: clamp(48px, min(15vw, 10vh), 90px); }
+    .logo .l2 { font-size: clamp(34px, min(10vw, 7vh), 64px); }
     .modes { grid-template-columns: 1fr; gap: 10px; width: 100%; max-width: 320px; }
     .mode { padding: 10px; }
     .mode .ic { font-size: 38px; }
@@ -288,7 +291,13 @@
     .big { font-size: clamp(36px, 12vh, 70px); }
     .modes { grid-template-columns: repeat(2, minmax(140px, 260px)); }
     .mode .ds { display: none; }
-    .ctitle { font-size: clamp(26px, 9vh, 44px); }
+    .ctitle { font-size: clamp(24px, 8vh, 40px); }
+    .csub { display: none; }
+    .scard th, .scard td { padding: 3px 10px; }
+    .scard td { font-size: 15px; }
+    .scard .who img { width: 24px; height: 24px; }
+    .flag.on { font-size: 17px; }
+    .best { font-size: 13px; }
     .buddybtn img, .buddybtn .five { width: 46px; height: 46px; line-height: 46px; font-size: 32px; }
     .buddybtn small { display: none; }
     .modename { font-size: 18px; }

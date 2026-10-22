@@ -50,7 +50,7 @@
   L.rule(/^PLAYER (\d)$/, '玩家 $1');
   L.rule(/^NOW: (\d+)$/, '现在：$1');
   L.rule(/^HIT THE (\d+)$/, '打 $1');
-  L.rule(/^(\d+) DARTS$/, '$1 支飞镖');
+  L.rule(/^(\d+) DARTS?$/, '$1 支飞镖');
   L.rule(/^TOO MANY! BACK TO (\d+)$/, '打多啦！回到 $1');
   L.rule(/^1 LEFT CAN’T BE A DOUBLE! BACK TO (\d+)$/, '剩 1 分没法用双倍打完！回到 $1');
   L.rule(/^FINISH ON A DOUBLE! BACK TO (\d+)$/, '最后一镖要打双倍区！回到 $1');
@@ -65,5 +65,5 @@
   L.rule(/^(\S+) (.+) FROM (.+)!$/, (m, e, item, who) => `${e} ${name(who)} 送来的${TREAT[item] || item}！`);
   L.rule(/^WINS: (.+)$/, (m, list) => '赢的次数：' + list.split(' · ').map((s) => { const i = s.lastIndexOf(' '); return `${name(s.slice(0, i))} ${s.slice(i + 1)}`; }).join(' · '));
   // "TEDDY'S BEST 12 DARTS · TOMMY'S BEST 20 DARTS"
-  L.rule(/^(.+'S BEST \d+ DARTS)( · .+'S BEST \d+ DARTS)*$/, (m) => m.split(' · ').map((s) => { const k = /^(.+)'S BEST (\d+) DARTS$/.exec(s); return `${name(k[1])} 的最好成绩 ${k[2]} 支飞镖`; }).join(' · '));
+  L.rule(/^(.+'S BEST \d+ DARTS?)( · .+'S BEST \d+ DARTS?)*$/, (m) => m.split(' · ').map((s) => { const k = /^(.+)'S BEST (\d+) DARTS?$/.exec(s); return `${name(k[1])} 的最好成绩 ${k[2]} 支飞镖`; }).join(' · '));
 })();

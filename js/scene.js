@@ -345,7 +345,7 @@
     const L = LOOK[style];
     const aspect = camera.aspect || 1;
     const back = aspect < 0.8 ? 1.7 : 1;
-    return { pos: new T.Vector3(1.3 * back, 1.35, L.D + 2.4 * back), look: new T.Vector3(-0.25, 1.0, L.D * 0.45), fov: 48 };
+    return { pos: new T.Vector3(1.1 * back, 1.4, L.D + 2.6 * back), look: new T.Vector3(-0.95, 1.0, L.D * 0.3), fov: 50 };
   }
   // FRONT: from between the board and the line, looking back at the players (hellos, high fives, the winner's dance)
   function frontView(focus) {
@@ -353,7 +353,7 @@
     const f = focus || { x: 0, z: L.D + 0.15 };
     const aspect = camera.aspect || 1;
     const back = aspect < 0.8 ? 0.7 : 0;
-    return { pos: new T.Vector3(f.x + 0.35, 1.0, f.z - 1.35 + back * -0.2), look: new T.Vector3(f.x, 0.72, f.z), fov: aspect < 0.8 ? 64 : 50 };
+    return { pos: new T.Vector3(f.x + 0.3, 0.95, Math.max(0.35, f.z - 1.75 + back * -0.1)), look: new T.Vector3(f.x, 0.68, f.z), fov: aspect < 0.8 ? 66 : 52 };
   }
   function boardView() {
     // a close look at the board after a turn: the darts where they landed

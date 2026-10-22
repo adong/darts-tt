@@ -55,6 +55,12 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
         console.log((s.label || s.shot || 'js') + ':', typeof v === 'string' ? v : JSON.stringify(v));
       }
       if (s.wait) await sleep(s.wait);
+      if (s.js && s.js.includes('location.reload')) {
+        // a reload can drop the phone emulation: put it back
+        await send('Emulation.setDeviceMetricsOverride', { width: +W, height: +H, deviceScaleFactor: 1, mobile: mobile === '1' });
+        if (mobile === '1') await send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });
+        await send('Runtime.evaluate', { expression: "window.dispatchEvent(new Event('resize'))" });
+      }
       if (s.shot) {
         const r = await send('Page.captureScreenshot', { format: 'jpeg', quality: 86 });
         fs.writeFileSync(path.join(outDir, s.shot + '.jpg'), Buffer.from(r.result.data, 'base64'));
